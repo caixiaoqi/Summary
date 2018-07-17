@@ -1,0 +1,15 @@
+git config --global user.email "1121420679@qq.com"                        //设置邮箱
+git config --global user.name "喻奇"                                                    //设置名字
+git branch                //查看分支
+git branch -a             //查看全部分支
+git checkout 分支名称                    //切换分支,如git checkout develop-yuqi
+
+git status                   //查看当前分支最新版本与要提交的版本的差git
+git add                      //有最新的文件创建，最好先git add
+git add .                    //他会监控工作区的状态树，使用它会把工作时的所有变化提交到暂存区，
+                                     包括文件内容修改(modified)以及新文件(new)，但不包括被删除的文件
+git add -u                  //他仅监控已经被add的文件（即tracked file），他会将被修改的文件提交到暂存区。
+                                       add -u 不会提交新文件（untracked file）。（git add --update的缩写）
+git add -A                  //git add --all的缩写，上面两个功能的集合
+
+git commit -m
