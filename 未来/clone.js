@@ -13,10 +13,10 @@ function clone(obj){
   }
 
   for(var key in obj){
-    if(classof(obj)==="Object"){
-      result[key]=arguments.callee(obj);
-    }else if(classof(obj)==="Array"){
-      result[key]=arguments.callee(obj);
+    if(classof(obj[key])==="Object"){
+      result[key]=arguments.callee(obj[key]);
+    }else if(classof(obj[key])==="Array"){
+      result[key]=arguments.callee(obj[key]);
     }
     else{
       result[key]=obj;
@@ -24,3 +24,6 @@ function clone(obj){
   }
   return result;
 }
+
+
+
