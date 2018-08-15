@@ -25,8 +25,8 @@ function quickSort(arr){
 function insertSort(arr){
   for(var i=1;i<arr.length;i++){
     var temp=arr[i];
-    for(var j=i;j>0&&a[j-1]>temp;j--){
-      a[j]=a[j-1];
+    for(var j=i;j>0&&arr[j-1]>temp;j--){
+      arr[j]=arr[j-1];
     }
     a[j]=temp;
   }

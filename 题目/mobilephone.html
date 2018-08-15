@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <form action="">
+    <label for="mobilephone">电话号码</label>
+    <input type="text" id="mobilephone">
+  </form>
+  <script>
+    var phone=document.getElementById('mobilephone');
+    phone.addEventListener('change',function(){
+      if(!/^1[0-9]{10}/.test(this.value)){
+        alert("please enter right phonenumber");
+      }
+      else{
+        var arr=[];
+        //push方法返回的是新数组的长度
+        //arr.push(this.value.slice(0,3));
+        //arr.push(this.value.slice(3,7));
+        //arr.push(this.value.slice(7));
+        //this.value=arr.join(' ');
+      }
+    },false)
+    phone.addEventListener('input',function(e){
+      //input事件的data属性代表输入文本
+      if(this.value.length===3){
+        this.value=this.value+' '+e.data;
+      }
+        console.log(e)
+    },false)
+  </script>
+</body>
+</html>
