@@ -14,24 +14,12 @@
   <script>
     var phone=document.getElementById('mobilephone');
     phone.addEventListener('change',function(){
-      if(!/^1[0-9]{10}/.test(this.value)){
+      if(!/^1[0-9]{10}$/.test(this.value)){
         alert("please enter right phonenumber");
       }
       else{
-        var arr=[];
-        //push方法返回的是新数组的长度
-        //arr.push(this.value.slice(0,3));
-        //arr.push(this.value.slice(3,7));
-        //arr.push(this.value.slice(7));
-        //this.value=arr.join(' ');
+        this.value=this.value.replace(/^(\d{3})(\d{4})(\d{4})/,'$1-$2-$3');
       }
-    },false)
-    phone.addEventListener('input',function(e){
-      //input事件的data属性代表输入文本
-      if(this.value.length===3){
-        this.value=this.value+' '+e.data;
-      }
-        console.log(e)
     },false)
   </script>
 </body>
