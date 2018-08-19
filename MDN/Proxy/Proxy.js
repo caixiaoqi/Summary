@@ -15,24 +15,51 @@ var p=new Proxy(target,handler);
 console.log(p.x,p.y);       //99   17 
 
 
-//通过代理，可以验证向一个对象的传值
-let validator={
-  set:function(target,key,value){
-    if(key==='age'){
-      if(Number.isInteger(value)){
-        throw new TypeError('this age is not integer');
-      }
-      if(value>200){
-        throw new RangeError('this age seems invalid')
-      }
-      target[age]=value;
-    }
+//Proxy并不是对象的透明代理，即不做任何拦截的情况下也无法保证与目标对象的行为一致。
+//主要原因是在Proxy代理的情况下，目标对象中的this会指向Proxy代理。
+var target={
+  m(){
+    return this===target;       //true
   }
 }
-var p=new Proxy({},validator);
-p.age=100;
-console.log(p.age);
-p.age=250;
-console.log(p.age);
-p.age=2.3;
-console.log(p.age);
+target.m();
+var p=new Proxy(target,{});
+p.m();            //false
+
+//此外，有些原生对象的内部属性智能通过正确的this获得，所以Proxy无法代理。
+var target=new Date();
+console.log(target);
+var handler={};
+var p=new Proxy(target,handler);
+console.log(target.getDate());
+p.getDate();      //TypeError,因为getDate只能在Date对象上获取，如果this不是Date独享实例会报错。
+//修改
+var target=new Date();
+var p=new Proxy(target,{
+  get(target,property){
+    if(property==='getDate'){
+      return target.getDate.bind(target); //这里要返回一个函数，因为getDate属性是返回一个函数的
+      //后面的括号（）代表执行
+    }
+  }
+})
+p.getDate();
+
+//实现一个数组的负数取值
+function createArray(...element){
+  var target=[];
+  target.push(...element);
+  var handler={
+    get(target,property){
+      var index=Number(property);
+      if(index>=0){
+        return target[index];
+      }
+      else{
+        return target[index+target.length];
+      }
+    }
+  }
+  return new Proxy(target,handler);//返回一个Proxy
+}
+createArray(1,2,3,4,5,6,7,8,9)[-4]   //6
