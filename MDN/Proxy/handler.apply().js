@@ -14,7 +14,7 @@ var proxy1=new Proxy(sum,handler);
 console.log(sum(1,2));
 console.log(proxy1(1,2))
 //target表示目标对象，也就是目标函数
-//thisArg表示被调用时指定的上下文对象
+//thisArg表示被target调用时指定的上下文对象
 //arguments表示被调用时的参数数组
 
 
