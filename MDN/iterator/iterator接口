@@ -1,0 +1,11 @@
+默认有iterator接口的有：
+1.Array
+2.String
+3.Map
+4.Set
+5.Arguments对象
+6.NodeList对象
+
+for...of循环会自动寻找iterator接口.
+iterator接口部署在数据结构的Symbol.iterator属性上。
+执行这个属性就会返回一个遍历器对象。
