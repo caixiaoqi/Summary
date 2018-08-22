@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
+        <title>Pivot Demo</title>
+
+        <!-- external libs from cdnjs -->
+        <link rel="stylesheet" type="text/css" href="../cdnjs/c3.min.css">
+        <script type="text/javascript" src="../cdnjs/jquery.min.js"></script>
+        <script type="text/javascript" src="../cdnjs/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../cdnjs/d3.min.js"></script>
+        <script type="text/javascript" src="../cdnjs/jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" src="../cdnjs/papaparse.js"></script>
+        <script type="text/javascript" src="../cdnjs/c3.min.js"></script>
+
+        <!-- PivotTable.js libs from ../dist -->
+        <link rel="stylesheet" type="text/css" href="../dist/pivot.css">
+        <script type="text/javascript" src="../dist/pivot.js"></script>
+        <script type="text/javascript" src="../dist/pivot.zh.js"></script>
+        <script type="text/javascript" src="../dist/d3_renderers.js"></script>
+        <script type="text/javascript" src="../dist/c3_renderers.js"></script>
+        <script type="text/javascript" src="../dist/export_renderers.js"></script>
+        <script type="text/javascript" src="../dist/getUrl.js"></script>
+
+        <style>
+            body {font-family: Verdana;}
+            .node {
+              border: solid 1px white;
+              font: 10px sans-serif;
+              line-height: 12px;
+              overflow: hidden;
+              position: absolute;
+              text-indent: 2px;
+            }
+            .c3-line, .c3-focused {stroke-width: 3px !important;}
+            .c3-bar {stroke: white !important; stroke-width: 1;}
+            .c3 text { font-size: 12px; color: grey;}
+            .tick line {stroke: white;}
+            .c3-axis path {stroke: grey;}
+            .c3-circle { opacity: 1 !important; }
+            .c3-xgrid-focus {visibility: hidden !important;}
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+			$(function(){
+				<!-- $("#output").empty().text("Loading...") -->
+				request = GetRequest();
+
+				var url;
+				val = request['url'];
+								
+				<!-- Papa.parse("https://raw.githubusercontent.com/vincentarelbundock/Rdatasets/master/csv/datasets/iris.csv", {  -->
+				var renderers = $.extend(
+					$.pivotUtilities.renderers,
+					$.pivotUtilities.c3_renderers,
+					$.pivotUtilities.d3_renderers,
+					$.pivotUtilities.export_renderers
+				);
+
+                $("#csv").bind("change", function(event){
+					$("#output").html("<p align='center' style='color:grey;'>(processing...)</p>")
+                    Papa.parse(event.target.files[0], {
+                        skipEmptyLines: true,
+                        error: function(e){ alert(e) },
+						encoding: "gbk",
+                        complete: function(parsed){
+                            $("#output").pivotUI(parsed.data, { renderers: renderers }, true, "zh");
+                        }
+                    });
+                });
+				
+				Papa.parse("../data/iris1.csv", { 
+				download: true, 
+				complete: function(parsed){
+							var renderers = $.extend(
+								$.pivotUtilities.renderers,
+								$.pivotUtilities.c3_renderers,
+								$.pivotUtilities.d3_renderers,
+								$.pivotUtilities.export_renderers
+								);
+							$("#output").pivotUI(parsed.data, {
+								hiddenAttributes: [""],
+								renderers: renderers }, true, "zh");	
+					} 
+				});
+			});
+        </script>
+		<p align="center" style="line-height: 1.5">
+			<!-- <label id="filechooser">点击此处选择文件<input id="csv" type="file" style="display:none"/></label> -->
+		</p>
+        <div id="output" style="margin: 10px;"></div>
+
+    </body>
+</html>
