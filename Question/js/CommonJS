@@ -1,0 +1,38 @@
+node.js就是CommonJS编写
+AMD
+ES6
+
+每个JS文件都是一个模块
+在服务器端，模块的加载是运行时同步加载的
+在浏览器端：模块需要提前提前编译打包处理
+
+基本语法
+
+module.exports=value;  //直接赋值
+exports.xxx=value;      //给exports添加属性
+暴露的本质是对象，exports这个对象，exports本身是个{}对象
+
+require(xxx)  第三方模块是文件名，如fs
+              自定义模块就是文件路径
+
+
+AMD 规范：浏览器，模块加载是异步的
+define(function(){
+  return 模块
+})
+define(['module1','module2'],function(m1,m2){
+  return 模块
+})
+
+require(['module1'],function(){
+  一般在主模块中
+})
+
+
+ES6
+依赖模块需要打包处理
+export
+import
+Babel将ES6转换为ES5
+
+对象的解构赋值

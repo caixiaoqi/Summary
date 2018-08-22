@@ -12,3 +12,4 @@ var myFish = ['angel', 'clown', 'drum', 'mandarin', 'sturgeon'];
 var removed = myFish.splice(3, 1);
 //运算后的myFish：["angel", "clown", "drum", "sturgeon"]
 //被删除元素数组：["mandarin"]
+
